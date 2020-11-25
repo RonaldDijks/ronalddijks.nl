@@ -1,2 +1,6 @@
+# next
 .next
+
+# yarn
 node_modules
+yarn-error.log

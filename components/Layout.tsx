@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, Link } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
 import Container from "./Container";
@@ -12,28 +12,24 @@ const Navigation = () => {
       marginTop="1em"
       paddingTop="2em"
       paddingBottom="2em"
+      as="header"
     >
-      <div>
+      <Box>
         <NextLink href="/" passHref>
-          <a>
+          <Link>
             <Heading as="h1" size="md">
               Ronald Dijks
             </Heading>
-          </a>
+          </Link>
         </NextLink>
-      </div>
-      <div>
-        <NextLink href="/about" passHref>
-          <Button as="a" variant="ghost" padding={[1, 4]}>
-            About
-          </Button>
-        </NextLink>
+      </Box>
+      <Box>
         <NextLink href="/blog" passHref>
           <Button as="a" variant="ghost" padding={[1, 4]}>
             Blog
           </Button>
         </NextLink>
-      </div>
+      </Box>
     </Box>
   );
 };

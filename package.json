@@ -5,6 +5,7 @@
     "@emotion/styled": "^11.0.0",
     "framer-motion": "^2.9.4",
     "next": "^10.0.3",
+    "next-mdx-enhanced": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
