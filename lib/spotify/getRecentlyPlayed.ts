@@ -102,7 +102,6 @@ export interface RootObject {
 const API_KEY = process.env.SPOTIFY_API_KEY;
 
 export const getRecentlyPlayed = async (): Promise<Track | null> => {
-  console.log("getRecentlyPlayed");
   if (!API_KEY) return null;
   try {
     const response = await fetch(
@@ -125,7 +124,7 @@ export const getRecentlyPlayed = async (): Promise<Track | null> => {
       artist: recentTrack.track.artists.map((artist) => artist.name).join(", "),
       track: recentTrack.track.name,
       url: recentTrack.track.external_urls.spotify,
-      isPlaying: false,
+      state: "stopped",
     };
     return track;
   } catch (error) {

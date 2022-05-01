@@ -112,7 +112,6 @@ export interface RootObject {
 const API_KEY = process.env.SPOTIFY_API_KEY;
 
 export const getCurrentlyPlayingTrack = async (): Promise<Track | null> => {
-  console.log("getCurrentlyPlayingTrack");
   if (!API_KEY) return null;
   try {
     const response = await fetch(
@@ -125,13 +124,13 @@ export const getCurrentlyPlayingTrack = async (): Promise<Track | null> => {
         ],
       }
     );
-    if (!response.ok) return null;
+    if (response.status !== 200) return null;
     const json: RootObject = await response.json();
     const track: Track = {
       artist: json.item.artists.map((artist) => artist.name).join(", "),
       track: json.item.name,
       url: json.item.external_urls.spotify,
-      isPlaying: json.is_playing,
+      state: json.is_playing ? "playing" : "paused",
     };
     return track;
   } catch (error) {
