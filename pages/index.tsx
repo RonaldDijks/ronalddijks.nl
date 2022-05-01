@@ -2,32 +2,27 @@ import React from "react";
 import Image from "next/image";
 import imageSource from "../assets/me.jpg";
 import Header from "../components/Header";
+import Link from "../components/Link";
+import { InferGetServerSidePropsType } from "next";
+import { getLastPlayed } from "../lib/spotify/getLastPlayed";
 
-interface LinkProps {
-  href: string;
-  children: React.ReactNode;
-}
-
-const Link: React.FC<LinkProps> = ({ children, href }) => {
-  return (
-    <a className="underline" href={href}>
-      {children}
-    </a>
-  );
+export const getServerSideProps = async () => {
+  const track = await getLastPlayed();
+  return {
+    props: {
+      track,
+    },
+  };
 };
 
-const IndexPage: React.FC = () => {
+type IndexPageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const IndexPage: React.FC<IndexPageProps> = ({ track }) => {
   return (
     <div>
-      <Header
-        lastListened={{
-          artist: "Meshuggah",
-          song: "Bleed",
-          link: "https://www.last.fm",
-        }}
-      />
+      <Header lastListened={{ track: track ?? undefined }} />
       <div className="max-w-3xl mx-auto">
-        <section className="py-40">
+        <section className="pt-40">
           <div className="flex">
             <div className="max-w-xs">
               <Image
@@ -39,9 +34,11 @@ const IndexPage: React.FC = () => {
             <div className="ml-8">
               <h1 className="text-2xl font-bold mb-2">Hi, I&apos;m Ronald.</h1>
               <p className="mb-4">
-                I&apos;m a software developer from Amsterdam. I work at Crisp as
-                a fullstack developer, and I run Essential Audio with two of my
-                friends.
+                I&apos;m a software developer from Amsterdam. I work at{" "}
+                <Link href="https://www.crisp.nl/">Crisp</Link> as a fullstack
+                developer, and I run{" "}
+                <Link href="https://essentialaud.io/">Essential Audio</Link>{" "}
+                with two of my friends.
               </p>
               <p className="mb-4">
                 You can find me on{" "}
